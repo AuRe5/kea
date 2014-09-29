@@ -7,7 +7,10 @@ $app = new Silex\Application();
 $app['debug'] = true;
 
 $app->get('/hello/{name}', function ($name) use ($app) {
-    return 'Hello '.$app->escape($name);
+
+	$m = new Mustache_Engine;
+	return $m->render('Hello, {{planet}}!', array('planet' => $app->escape($name))); 
+	
 });
 
 $app->run();
