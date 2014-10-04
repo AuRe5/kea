@@ -34,30 +34,37 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 
 $app->get('/', function () use($app) {
 
-    $sql = "SELECT * FROM abteilungen ORDER BY `name` ASC";
-    $stmt = $app['db']->query($sql);
+    //Fetching data from db for Frontend 
+    $data['abt_hochwacht'] = $app['db']->fetchAll("SELECT * FROM abteilungen WHERE `parent` = 'Region Hochwacht' ORDER BY `name` ASC");
+    $data['abt_hanswaldmann'] = $app['db']->fetchAll("SELECT * FROM abteilungen WHERE `parent` = 'Korps Hans Waldmann' ORDER BY `name` ASC");
+    $data['kurse'] = $app['db']->fetchAll("SELECT * FROM kurse WHERE `type` = 'kurs' ORDER BY `id` ASC");
+    $data['ablat'] = $app['db']->fetchAll("SELECT * FROM kurse WHERE `type` = 'ablat' ORDER BY `id` ASC");
 
-    while ($row = $stmt->fetch()) {
-        if($row['parent'] == 'Region Hochwacht')
-            $abteilungen_hochwacht[] = $row;
-        if($row['parent'] == 'Korps Hans Waldmann')
-            $abteilungen_hanswaldmann[] = $row;
-    }
-
-    $data['abt_hochwacht'] = $abteilungen_hochwacht;
-    $data['abt_hanswaldmann'] = $abteilungen_hanswaldmann;
-    //die("<pre>".print_r($abteilungen_hanswaldmann, true)."</pre>");
-
+    //die("<pre>".print_r($data, true)."</pre>");
     return $app['mustache']->render('register', $data);	
 });
 
 $app->get('/thanks', function () use($app) {
+DateTimeZone::EUROPE;
+    $data['year'] = date('Y')+1;
 
     return $app['mustache']->render('thanks', $data);	
 });
 
 $app->post('/save', function(Request $request) use($app) {
 
+    $leiter = array();
+    $leiter['pfadiname'] = ucfirst($request->get('pfadiname'));
+    $leiter['email'] = strtolower($request->get('email'));
+    $leiter['natelnummer'] = pre_replace("/\s/", "", $request->get('natelnummer'));
+    $leiter['abteilung'] = $request->get('abteilung');
+    $leiter['erfahrung_1_stufe'] = $request->get('erfahrung_1_stufe');
+    $leiter['erfahrung_2_stufe'] = $request->get('erfahrung_2_stufe');
+    $leiter['aktuell_leiter_in'] = $request->get('aktuell_leiter_in');
+    $leiter['panorama'] = $request->get('panorama');
+    $leiter['bemerkung'] = $request->get('bemerkung');
+
+    $sql = "INSERT INTO `kea`.`leiter` (`pafdiname`, `email`, `natelnummer`, `abteilung`, `erfahrung_1_stufe`, `erfahrung_2_stufe`, `aktuell_leiter_in`, `panorama`, , `bemerkung`) VALUES ('".$leiter['pfadiname']."', '".$leiter['email']."', '".$leiter['natelnummer']."', '".$leiter['abteilung']."', '".$leiter['erfahrung_1_stufe']."', '".$leiter['erfahrung_2_stufe']."', '".$leiter['aktuell_leiter_in']."', '".$leiter['panorama']."', '".$leiter['bemerkung']."');"
     return "ok";
 });
 

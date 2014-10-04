@@ -11,7 +11,7 @@
 	<h1>Kursequippen Anmeldung</h1>
 	<p class='year'>Kurssaison {{year}}</p>
 
-	<p>Auch diese Jahr organisiert die AuRe5 Vorbasis & J+S Basis- & Aubau-Kurse. Damit wir Dich und deine Wünsch bei der Kursvergabe resp. Equippenverteilung berücksichtigen können, musst du dich hier eintragen.</p>
+	<p>Auch diese Jahr organisiert die AuRe5 Pio-, Futura-, J+S Basis- und J+S Aubau-Kurse. Damit wir Dich und deine Wünsch bei der Kursvergabe resp. Equippenverteilung berücksichtigen können, bitten wir Dich nachfolgend ein zu tragen. Um deine Chancen, einem Kurs deiner Wahl zugeteillt zu werden, zu erh&ouml;hen, empfehlen wir Dir mehrere Optionen an zu geben und diese zu priorisieren. Wir versuchen deine W&uuml;nsche zu ber&uuml;cksichtigen, k&ouml;nnen aber nicht daf&uuml;r garantieren.</p>
 
 	<h2>Daten</h2>
 	<table>
@@ -20,11 +20,11 @@
 			<th>Wann?</th>
 		</tr>
 		<tr>
-			<td>Anmeldefrist Equippe</td>
-			<td27. Oktober 2014 um 17.00 Uhrtd>
+			<td>Anmeldefrist f&uuml;r Equippe</td>
+			<td>27. Oktober 2014 um 17.00 Uhr<td>
 		</tr>
 		<tr>
-			<td>Equippenverteilerh&ouml;ck</td>
+			<td>Kursleiterh&ouml;ck</td>
 			<td>27. Oktober 2014 ab 19.00 Uhr</td>
 		</tr>
 		<tr>
@@ -45,10 +45,44 @@
 			<td>Ablat</td>
 			<td>8. Mai 2015</td>
 		</tr>
+		<tr>
+			<td>Auswertungsh&ouml;ck</td>
+			<td>10. Mai 2015</td>
+		</tr>
 	</table>
 
 	<h2>Kurse</h2>
 	<p>Gib hier unten an, für welche Kurs du dich interresierts. Bitte gebe ebenfalls auch die Prioritäten an bezüglich den einzelnen Kursen.</p>
+
+	<table class='kurse'>
+		<tr>
+			<th>Kurs</th>
+			<th>Kursdaten</th>
+			<th>Intressse</th>
+			<th>Priorit&auml;t</th>
+		</tr>
+		{{#kurse}}
+		<tr>
+			<td class='kurs_name'>{{name}}</td>
+			<td class='kurs_daten'>{{daten}}</td>
+			<td class='kurs_wunsch'><input type='radio' name='intresse_kurs_{{id}}' value='equippe' requiered /> Equippe <input type='radio' name='intresse_kurs_{{id}}' value='kueche' requiered /> K&uuml;che <input type='radio' name='intresse_kurs_{{id}}' value='nichts' requiered checked /> Kein Interesse</td>
+			<td class='kurs_priorit&auml;t'><input type='text' name='prioritaet_kurs_{{id}}' placeholder="1" pattern="[0-9]{1,2})" disabled /></td>
+		</tr>
+		{{/kurse}}
+		
+	</table>
+
+	<p>Wir suchen nat&uuml;rlich auf motivierte Leiter, die gerne das Ablat (mit-)organisieren w&uuml;rden.</p>
+
+	<table class'ablat'>
+		{{#ablat}}
+		<tr>
+			<td class='kurs_name'>{{name}}</td>
+			<td class='kurs_daten'>{{daten}}</td>
+			<td class='kurs_wunsch'><input type='radio' name='intresse_ablat_{{id}}' value='hauptorganisator' requiered /> Hauptorganisator <input type='radio' name='intresse_kurs_{{id}}' value='helfer' requiered /> Helfer <input type='radio' name='intresse_kurs_{{id}}' value='nichts' requiered checked /> Kein Interesse</td>
+		</tr>
+		{{/ablat}}
+	</table>
 
 	<h2>Pers&ouml;hnliche Angaben</h2>
 	<p>Damit wir dich am optimalsten einteilen können oder bei Unklarheiten anrufen können benötigen wir noch einige Angaben von Dir. Bitte stelle sichr, dass du während dem Höck (siehe oben Kapital "Infos & Daten") telefonisch erreichbar bist.</p>
