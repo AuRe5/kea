@@ -71,12 +71,10 @@ $app->post('/save', function(Request $request) use($app) {
         if(preg_match('/^intresse_kurs_/',$param_iterator->key()) && $param_iterator->current() != "nichts") {
             $kurs_key_array = explode("_", $param_iterator->key());
             $app['db']->insert('anmeldung', array("user_id" => $user_id, "kurs_id" => $kurs_key_array[2], "type" => $param_iterator->current(), "prio" => $request->get('prioritaet_kurs_'.$kurs_key_array[2])));
-
-            $ret .= $param_iterator->key() . "=" . $param_iterator->current() . " => ".$request->get('prioritaet_kurs_'.$kurs_key_array[2])."<br/>";
+            //$ret .= $param_iterator->key() . "=" . $param_iterator->current() . " => ".$request->get('prioritaet_kurs_'.$kurs_key_array[2])."<br/>";
         }
         $param_iterator->next();
     }
-    die("<pre>".print_r($ret,true)."</pre>-");
 
     return $app->redirect($app["url_generator"]->generate("thanks"));
 });
