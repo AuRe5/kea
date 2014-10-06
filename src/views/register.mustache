@@ -1,13 +1,17 @@
+<!DOCTYPE html> 
 <html>
 	<head>
 			<title>KEA - Kursequippen Anmeldung</title>
+			<link rel='stylesheet' type='text/css' href='/c/general_style.css' />
+			<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js" ></script>
+			<script type="text/javascript" src="/js/form.validation.js" ></script>
 	</head>
 <body>
 <div>
 	<img src='i/hanswaldmannlogo.gif' alt='Hans Waldmann' height='150'/>
 	<img src='i/hochwachtlogo.jpg' alt='Hochwacht' height='150'/>
 
-	<form action='/save' method='POST' name='save'>
+	<form action='/save' method='POST' name='save' onsubmit="return validateForm();">
 	<h1>Kursequippen Anmeldung</h1>
 	<p class='year'>Kurssaison {{year}}</p>
 
@@ -65,8 +69,8 @@
 		<tr>
 			<td class='kurs_name'>{{name}}</td>
 			<td class='kurs_daten'>{{daten}}</td>
-			<td class='kurs_wunsch'><input type='radio' name='intresse_kurs_{{id}}' value='equippe' requiered /> Equippe <input type='radio' name='intresse_kurs_{{id}}' value='kueche' requiered /> K&uuml;che <input type='radio' name='intresse_kurs_{{id}}' value='nichts' requiered checked /> Kein Interesse</td>
-			<td class='kurs_priorit&auml;t'><input type='text' name='prioritaet_kurs_{{id}}' placeholder="1" pattern="[0-9]{1,2})" disabled /></td>
+			<td class='kurs_wunsch'><input type='radio' name='intresse_kurs_{{id}}' id='intresse_kurs_{{id}}_equippe' value='equippe' requiered /> Equippe <input type='radio' name='intresse_kurs_{{id}}' id='intresse_kurs_{{id}}_kueche' value='kueche' requiered /> K&uuml;che <input type='radio' name='intresse_kurs_{{id}}' id='intresse_kurs_{{id}}_nichts' value='nichts' requiered checked /> Kein Interesse</td>
+			<td class='kurs_prioritaet'><input type='number' name='prioritaet_kurs_{{id}}' placeholder="" pattern="[0-9]{1,2}" style='display:none;' id='prioritaet_kurs_{{id}}'/></td>
 		</tr>
 		{{/kurse}}
 		
@@ -90,29 +94,30 @@
 	<table>
 		<tr>
 			<td>Pfadiname</td>
-			<td><input type='text' name-'pfadiname' id='pfadiname' placeholder="Taze" required/></td>
+			<td><input type='text' name='pfadiname' id='pfadiname' /></td>
 			<td>&nbsp;</td>
 			<td>Ich habe Erfahrung in der</td>
 			<td><input type='checkbox' name='erfahrung_1_stufe' id='erfahrung_1_stufe' value='1' /> 1. Stufe und/oder <input type='checkbox' name='erfahrung_2_stufe' id='erfahrung_2_stufe' value='2'/> 2. Stufe</td>
 		</tr>
 		<tr>
 			<td>E-Mail-Adresse</td>
-			<td><input type='text' name-'email' id='email' placeholder="taze@aure5.ch" pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})" title="Ung&uuml;ltige E-mail Adresse" required/></td>
+			<td><input type='text' name='email' id='email' placeholder="taze@aure5.ch" pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})" title="Ung&uuml;ltige E-mail Adresse" required/></td>
 			<td>&nbsp;</td>
 			<td>Aktuell leite ich in der</td>
-			<td><input type='radio' name='geleitet_in' id='geleitet_in_1' value='1' required/> 1. Stufe oder <input type='radio' name='geleitet_in' id='geleitet_in_2' value='2' required/> 2. Stufe</td>
+			<td><input type='radio' name='aktuell_leiter_in' id='aktuell_leiter_in_1' value='1' required/> 1. Stufe oder <input type='radio' name='aktuell_leiter_in' id='aktuell_leiter_in_2' value='2' required/> 2. Stufe</td>
 		</tr>
 		<tr>
 			<td>Natelnummer</td>
-			<td><input type='text' name-'mobile' id='mobile' placeholder="079 123 45 67" pattern="([0-9]{10})|(\s*[0-9]{3}\s*[0-9]{3}\s*[0-9]{2}\s*[0-9]{2}\s*)" title="Ung&uuml;ltige Natelnummer" required/></td>
+			<td><input type='text' name='natelnummer' id='natelnummer' placeholder="079 123 45 67" pattern="([0-9]{10})|(\s*[0-9]{3}\s*[0-9]{3}\s*[0-9]{2}\s*[0-9]{2}\s*)" title="Ung&uuml;ltige Natelnummer" required/></td>
 			<td>&nbsp;</td>
 			<td>Panoramekurs besucht ?</td>
-			<td><input type='radio' name='panorama' id='panorame_ja' value='1' required/> Ja  <input type='radio' name='panorama' id='panorame_nein' value='0' required/>Nein</td>
+			<td><input type='radio' name='panorama' id='panorama_ja' value='1' required/> Ja  <input type='radio' name='panorama' id='panorama_nein' value='0' required/>Nein</td>
 		</tr>
 		<tr>
 			<td>Abteilung</td>
 			<td>
 				<select name='abteilung' id='abteilung'>
+					<option value="0">- - - Bitte wählen - - -</option>
 				  <optgroup label="Region Hochwacht">
 				  	{{#abt_hochwacht}}
 				  		<option value="{{id}}">{{name}}</option>
@@ -126,7 +131,7 @@
 				</select>
 			</td>
 			<td>&nbsp;</td>
-			<td colspan='2'><textarea name-'bemerkung' id='bemerkung' placeholder="Bemerkung..."></textarea></td>
+			<td colspan='2'><textarea name='bemerkung' id='bemerkung' placeholder="Bemerkung..."></textarea></td>
 		</tr>
 	</table>
 

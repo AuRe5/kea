@@ -31,6 +31,8 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     ),
 ));
 
+$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
+
 
 $app->get('/', function () use($app) {
 
@@ -40,23 +42,20 @@ $app->get('/', function () use($app) {
     $data['kurse'] = $app['db']->fetchAll("SELECT * FROM kurse WHERE `type` = 'kurs' ORDER BY `id` ASC");
     $data['ablat'] = $app['db']->fetchAll("SELECT * FROM kurse WHERE `type` = 'ablat' ORDER BY `id` ASC");
 
-    //die("<pre>".print_r($data, true)."</pre>");
     return $app['mustache']->render('register', $data);	
 });
 
 $app->get('/thanks', function () use($app) {
-DateTimeZone::EUROPE;
     $data['year'] = date('Y')+1;
-
     return $app['mustache']->render('thanks', $data);	
-});
+})->bind("thanks");;
 
 $app->post('/save', function(Request $request) use($app) {
 
     $leiter = array();
     $leiter['pfadiname'] = ucfirst($request->get('pfadiname'));
     $leiter['email'] = strtolower($request->get('email'));
-    $leiter['natelnummer'] = pre_replace("/\s/", "", $request->get('natelnummer'));
+    $leiter['natelnummer'] = str_replace(" ", "", $request->get('natelnummer'));
     $leiter['abteilung'] = $request->get('abteilung');
     $leiter['erfahrung_1_stufe'] = $request->get('erfahrung_1_stufe');
     $leiter['erfahrung_2_stufe'] = $request->get('erfahrung_2_stufe');
@@ -64,8 +63,22 @@ $app->post('/save', function(Request $request) use($app) {
     $leiter['panorama'] = $request->get('panorama');
     $leiter['bemerkung'] = $request->get('bemerkung');
 
-    $sql = "INSERT INTO `kea`.`leiter` (`pafdiname`, `email`, `natelnummer`, `abteilung`, `erfahrung_1_stufe`, `erfahrung_2_stufe`, `aktuell_leiter_in`, `panorama`, , `bemerkung`) VALUES ('".$leiter['pfadiname']."', '".$leiter['email']."', '".$leiter['natelnummer']."', '".$leiter['abteilung']."', '".$leiter['erfahrung_1_stufe']."', '".$leiter['erfahrung_2_stufe']."', '".$leiter['aktuell_leiter_in']."', '".$leiter['panorama']."', '".$leiter['bemerkung']."');"
-    return "ok";
+    $app['db']->insert('leiter', $leiter);
+    $user_id = $app['db']->fetchColumn("SELECT id FROM `kea`.`leiter` WHERE `pfadiname` = '".$leiter['pfadiname']."' AND `email` = '".$leiter['email']."' AND `natelnummer` = '".$leiter['natelnummer']."'");
+    
+    $param_iterator = $request->request->getIterator();
+    while($param_iterator->valid()) {
+        if(preg_match('/^intresse_kurs_/',$param_iterator->key()) && $param_iterator->current() != "nichts") {
+            $kurs_key_array = explode("_", $param_iterator->key());
+            $app['db']->insert('anmeldung', array("user_id" => $user_id, "kurs_id" => $kurs_key_array[2], "type" => $param_iterator->current(), "prio" => $request->get('prioritaet_kurs_'.$kurs_key_array[2])));
+
+            $ret .= $param_iterator->key() . "=" . $param_iterator->current() . " => ".$request->get('prioritaet_kurs_'.$kurs_key_array[2])."<br/>";
+        }
+        $param_iterator->next();
+    }
+    die("<pre>".print_r($ret,true)."</pre>-");
+
+    return $app->redirect($app["url_generator"]->generate("thanks"));
 });
 
 //$app->mount('/admin', new AdminControllerProvider());
