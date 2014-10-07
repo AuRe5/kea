@@ -13,33 +13,33 @@ function validateForm() {
 		if($(this).val() != "nichts" && $(this).is(':checked')) { countChecked++; }
 	});
 	if(countChecked == 0)
-		errors.push("Bitte zeige ein bisschen mehr Interesse and en kursen.");
+		errors.push("Bitte zeige ein bisschen mehr Interesse an den Kursen.");
 	
 
 	if($("#pfadiname").val() == "")
-		errors.push("Pfadiname");
+		errors.push("Du hast dien Pfadiname vergessen.");
 
 	if($("#email").val() == "")
-		errors.push("E-mail Adresse");
+		errors.push("Du hast deine E-mail Adresse vergessen.");
 
 	if($("#natelnummer").val() == "")
-		errors.push("Natelnummer");
+		errors.push("Du hast deine Natelnummer vergessen");
 
 	if($("#abteilung").val() == "0")
-		errors.push("Abteilung");
+		errors.push("Du hast deine Abteilung vergessen");
 
 	if(!$("#erfahrung_1_stufe").is(':checked') && !$("#erfahrung_2_stufe").is(':checked'))
-		errors.push("In welcher Stufe hast du Leitererfahrung");
+		errors.push("In welcher Stufe hast du Leitererfahrung?");
 	
 	if(!$("#aktuell_leiter_in_1").is(':checked') && !$("#aktuell_leiter_in_2").is(':checked'))
-		errors.push("Aktuelle Leitertätigkeit");
+		errors.push("Was ist deine aktuelle Leitertätigkeit?");
 
 	if(!$("#panorama_ja").is(':checked') && !("#panorama_nein").is(':checked'))
-		errors.push("Panorama");
+		errors.push("Hast du den Panorama-Kurs besucht ?");
 
 	if(errors.length > 0) {
 
-		alert(errors);
+		alert(errors.shift());
 		return false;
 	}
 	else

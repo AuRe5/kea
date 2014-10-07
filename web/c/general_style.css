@@ -1,0 +1,175 @@
+body {
+	font-family: Verdana;
+	font-size: 12px;
+	text-align:center;
+	background-image: url('../i/bg.jpg');
+	background-repeat: repeat;
+}
+
+div#base {
+	background-color:#FFF;
+	border:5px double #885e1f;
+	width:850px;
+	text-align:left;
+
+	padding:15px;
+	margin-top:50px;
+	margin-left: auto ;
+    margin-right: auto ;
+}
+
+img {
+	height:120px;
+}
+
+table.title {
+	width:100%;
+}
+
+table.title td {
+	vertical-align: middle;
+	text-align: center;
+}
+
+table.title td.right {
+	width:160px;
+	text-align: right;
+}
+
+table.title td.left {
+	text-align: left;
+}
+
+h1 {
+	margin-bottom:0px;
+}
+
+h2.year {
+	margin-top:0px;
+	margin-bottom:10px;
+	font-weight:normal;
+	font-style: italic;
+}
+
+h2 {
+	margin-top:30px;
+	margin-bottom:0px;
+}
+
+p, p.justify {
+	text-align:center;
+	font-size: 12px;
+}
+
+p.lead {
+	margin-top:0px;
+	margin-bottom:15px;
+}
+
+p.intro {
+	margin-top:15px;
+}
+
+p.justify {
+	text-align: justify;
+}
+
+table.daten td {
+	height:20px;
+}
+
+table.daten td.hspace {
+	height:10px;
+}
+
+
+table th {
+	background-color: #9e8258;
+	color:#fff;
+	padding:3px;
+}
+
+.vspace {
+	width:30px;
+}
+
+.kurs_name {
+	width:240px;
+}
+
+.kurs_daten {
+	width:260px;
+}
+
+.kurs_wunsch {
+	width:260px;
+}
+
+.kurs_prioritaet {
+	width:60px;
+	text-align: right;
+}
+
+table.kurse {
+	width:100%;
+}
+
+table.ablat td, table.kurse td {
+	vertical-align: middle;
+	height:40px;
+	border-bottom:1px solid grey;
+}
+
+td.kurs_prioritaet input {
+	width:40px;
+	height:20px;
+	float:right;
+	text-align: center;
+}
+
+table.ablat {
+	width:100%;
+}
+
+table.ablat .kurs_wunsch{
+	width:auto;
+}
+
+
+table.angaben {
+	width:100%;
+}
+
+table.angaben td {
+	height:30px;
+}
+
+table.angaben td.label {
+	width:190px;
+	font-weight: bold;
+}
+
+table.angaben td.vspace {
+	width:25px;
+}
+
+table.angaben #bemerkung {
+	width:99%;
+	height:50px;
+}
+
+table.angaben td.textfield {
+	vertical-align: top;
+}
+
+input#submit {
+	margin-top:35px;
+	margin-bottom:20px;
+	width:200px;
+	height:40px;
+}
+
+div#center {
+	width:100%;
+	text-align: center;
+}

@@ -36,6 +36,7 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 $app->get('/', function () use($app) {
 
+    $data['year'] = date('Y')+1;
     //Fetching data from db for Frontend 
     $data['abt_hochwacht'] = $app['db']->fetchAll("SELECT * FROM abteilungen WHERE `parent` = 'Region Hochwacht' ORDER BY `name` ASC");
     $data['abt_hanswaldmann'] = $app['db']->fetchAll("SELECT * FROM abteilungen WHERE `parent` = 'Korps Hans Waldmann' ORDER BY `name` ASC");
@@ -65,12 +66,12 @@ $app->post('/save', function(Request $request) use($app) {
 
     $app['db']->insert('leiter', $leiter);
     $user_id = $app['db']->fetchColumn("SELECT id FROM `kea`.`leiter` WHERE `pfadiname` = '".$leiter['pfadiname']."' AND `email` = '".$leiter['email']."' AND `natelnummer` = '".$leiter['natelnummer']."'");
-    
     $param_iterator = $request->request->getIterator();
     while($param_iterator->valid()) {
         if(preg_match('/^intresse_kurs_/',$param_iterator->key()) && $param_iterator->current() != "nichts") {
             $kurs_key_array = explode("_", $param_iterator->key());
-            $app['db']->insert('anmeldung', array("user_id" => $user_id, "kurs_id" => $kurs_key_array[2], "type" => $param_iterator->current(), "prio" => $request->get('prioritaet_kurs_'.$kurs_key_array[2])));
+            $prio = ($request->get('prioritaet_kurs_'.$kurs_key_array[2]) == "") ? null : $request->get('prioritaet_kurs_'.$kurs_key_array[2]);
+            $app['db']->insert('anmeldung', array("user_id" => $user_id, "kurs_id" => $kurs_key_array[2], "type" => $param_iterator->current(), "prio" => $prio));
             //$ret .= $param_iterator->key() . "=" . $param_iterator->current() . " => ".$request->get('prioritaet_kurs_'.$kurs_key_array[2])."<br/>";
         }
         $param_iterator->next();

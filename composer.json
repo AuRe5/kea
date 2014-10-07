@@ -3,7 +3,6 @@
         "silex/silex": "~1.1",
         "mustache/mustache": "~2.5",
         "mustache/silex-provider": "~1.0",
-   		"phpunit/phpunit": "4.2.6",
    		"doctrine/dbal": "2.2.*",
    		"symfony/form": "~2.3"
      }

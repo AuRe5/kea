@@ -31,7 +31,7 @@ CREATE TABLE `kea`.`anmeldung` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `kurs_id` INT NOT NULL,
-  `type` VARCHAR(15) NULL,
+  `type` VARCHAR(30) NULL,
   `prio` INT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));

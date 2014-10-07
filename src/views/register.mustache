@@ -4,117 +4,135 @@
 			<title>KEA - Kursequippen Anmeldung</title>
 			<link rel='stylesheet' type='text/css' href='/c/general_style.css' />
 			<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js" ></script>
-			<script type="text/javascript" src="/js/form.validation.js" ></script>
+			<script type="text/javascript" src="/js/form.validation.js"></script>
 	</head>
 <body>
-<div>
-	<img src='i/hanswaldmannlogo.gif' alt='Hans Waldmann' height='150'/>
-	<img src='i/hochwachtlogo.jpg' alt='Hochwacht' height='150'/>
+<div id='base'>
+	<table class='title'>
+		<tr>
+			<td class='left'><img src='i/hanswaldmannlogo.gif' alt='Hans Waldmann' /></td>
+			<td><h1>AuRe5 - Kursequippen Anmeldung</h1><h2 class='year'>Kurssaison {{year}}</h2></td>
+			<td class='right'><img src='i/hochwachtlogo.jpg' alt='Hochwacht' /></td>
+		</tr>
+	</table>
 
 	<form action='/save' method='POST' name='save' onsubmit="return validateForm();">
-	<h1>Kursequippen Anmeldung</h1>
-	<p class='year'>Kurssaison {{year}}</p>
 
-	<p>Auch diese Jahr organisiert die AuRe5 Pio-, Futura-, J+S Basis- und J+S Aubau-Kurse. Damit wir Dich und deine Wünsch bei der Kursvergabe resp. Equippenverteilung berücksichtigen können, bitten wir Dich nachfolgend ein zu tragen. Um deine Chancen, einem Kurs deiner Wahl zugeteillt zu werden, zu erh&ouml;hen, empfehlen wir Dir mehrere Optionen an zu geben und diese zu priorisieren. Wir versuchen deine W&uuml;nsche zu ber&uuml;cksichtigen, k&ouml;nnen aber nicht daf&uuml;r garantieren.</p>
+	<p class='justify intro'>Auch diese Jahr organisiert die AuRe5 Pio-, Futura-, J+S Basis- und J+S Aubau-Kurse. Damit wir Dich und deine Wünsch bei der Kursvergabe resp. Equippenverteilung berücksichtigen können, bitten wir Dich nachfolgend ein zu tragen. Um deine Chancen, einem Kurs deiner Wahl zugeteillt zu werden, zu erh&ouml;hen, empfehlen wir Dir mehrere Optionen an zu geben und diese zu priorisieren. Wir versuchen deine W&uuml;nsche zu ber&uuml;cksichtigen, k&ouml;nnen aber nicht daf&uuml;r garantieren.</p>
 
 	<h2>Daten</h2>
-	<table>
+	<p class='justify lead'>Nachfolgend eine &Uuml;bersicht der wichtigsten Daten der Kurssaison {{year}}.</p>
+	<table class='daten' cellspacing='0'>
 		<tr>
 			<th>Was?</th>
+			<th class='vspace'>&nbsp;</th>
 			<th>Wann?</th>
 		</tr>
 		<tr>
 			<td>Anmeldefrist f&uuml;r Equippe</td>
+			<td class='vspace'>&nbsp;</td>
 			<td>27. Oktober 2014 um 17.00 Uhr<td>
 		</tr>
 		<tr>
 			<td>Kursleiterh&ouml;ck</td>
+			<td class='vspace'>&nbsp;</td>
 			<td>27. Oktober 2014 ab 19.00 Uhr</td>
 		</tr>
 		<tr>
-			<td colspan='2'>&nbsp;</td>
+			<td colspan='3' class='hspace'></td>
 		</tr>
 		<tr>
 			<td>Vorweekends</td>
+			<td class='vspace'>&nbsp;</td>
 			<td>3.-5. April 2015</td>
 		</tr>
 		<tr>
 			<td>Kurswoche</td>
+			<td class='vspace'>&nbsp;</td>
 			<td>18.-25. April 2015</td>
 		</tr>
 		<tr>
-			<td colspan='2'>&nbsp;</td>
+			<td colspan='3' class='hspace'></td>
 		</tr>
 		<tr>
 			<td>Ablat</td>
+			<td class='vspace'>&nbsp;</td>
 			<td>8. Mai 2015</td>
 		</tr>
 		<tr>
 			<td>Auswertungsh&ouml;ck</td>
+			<td class='vspace'>&nbsp;</td>
 			<td>10. Mai 2015</td>
 		</tr>
 	</table>
 
 	<h2>Kurse</h2>
-	<p>Gib hier unten an, für welche Kurs du dich interresierts. Bitte gebe ebenfalls auch die Prioritäten an bezüglich den einzelnen Kursen.</p>
+	<p class='justify lead'>Gib hier unten an, für welche Kurs du dich interresierts. Bitte gebe ebenfalls auch die Prioritäten an bezüglich den einzelnen Kursen.</p>
 
-	<table class='kurse'>
+	<table class='kurse' cellspacing='0'>
 		<tr>
-			<th>Kurs</th>
-			<th>Kursdaten</th>
-			<th>Intressse</th>
-			<th>Priorit&auml;t</th>
+			<th class='kurs_name'>Kurs</th>
+			<th class='kurs_daten'>Kursdaten</th>
+			<th class='kurs_wunsch'>Intressse</th>
+			<th class='kurs_prioritaet'>Priorit&auml;t</th>
 		</tr>
 		{{#kurse}}
 		<tr>
-			<td class='kurs_name'>{{name}}</td>
+			<td class='kurs_name'><b>{{name}}</b></td>
 			<td class='kurs_daten'>{{daten}}</td>
 			<td class='kurs_wunsch'><input type='radio' name='intresse_kurs_{{id}}' id='intresse_kurs_{{id}}_equippe' value='equippe' requiered /> Equippe <input type='radio' name='intresse_kurs_{{id}}' id='intresse_kurs_{{id}}_kueche' value='kueche' requiered /> K&uuml;che <input type='radio' name='intresse_kurs_{{id}}' id='intresse_kurs_{{id}}_nichts' value='nichts' requiered checked /> Kein Interesse</td>
-			<td class='kurs_prioritaet'><input type='number' name='prioritaet_kurs_{{id}}' placeholder="" pattern="[0-9]{1,2}" style='display:none;' id='prioritaet_kurs_{{id}}'/></td>
+			<td class='kurs_prioritaet'><input type='number' name='prioritaet_kurs_{{id}}' placeholder="1-9" pattern="[0-9]{1,2}" style='display:none;' id='prioritaet_kurs_{{id}}'/></td>
 		</tr>
 		{{/kurse}}
 		
 	</table>
 
-	<p>Wir suchen nat&uuml;rlich auf motivierte Leiter, die gerne das Ablat (mit-)organisieren w&uuml;rden.</p>
+	<br/>
+	<p class='justify'>Wir suchen nat&uuml;rlich auf motivierte Leiter, die gerne das Ablat (mit-)organisieren w&uuml;rden.</p>
+	<br/>
 
-	<table class'ablat'>
+	<table class='ablat' cellspacing='0'>
+		<tr>
+			<th class='kurs_name'>Kurs</th>
+			<th class='kurs_daten'>Kursdaten</th>
+			<th class='kurs_wunsch'>Intressse</th>
+		</tr>
 		{{#ablat}}
 		<tr>
-			<td class='kurs_name'>{{name}}</td>
+			<td class='kurs_name'><b>{{name}}</b></td>
 			<td class='kurs_daten'>{{daten}}</td>
-			<td class='kurs_wunsch'><input type='radio' name='intresse_ablat_{{id}}' value='hauptorganisator' requiered /> Hauptorganisator <input type='radio' name='intresse_kurs_{{id}}' value='helfer' requiered /> Helfer <input type='radio' name='intresse_kurs_{{id}}' value='nichts' requiered checked /> Kein Interesse</td>
+			<td class='kurs_wunsch'><input type='radio' name='intresse_kurs_{{id}}' value='hauptorganisator' requiered /> Hauptorganisator <input type='radio' name='intresse_kurs_{{id}}' value='helfer' requiered /> Helfer <input type='radio' name='intresse_kurs_{{id}}' value='nichts' requiered checked /> Kein Interesse</td>
 		</tr>
 		{{/ablat}}
 	</table>
 
 	<h2>Pers&ouml;hnliche Angaben</h2>
-	<p>Damit wir dich am optimalsten einteilen können oder bei Unklarheiten anrufen können benötigen wir noch einige Angaben von Dir. Bitte stelle sichr, dass du während dem Höck (siehe oben Kapital "Infos & Daten") telefonisch erreichbar bist.</p>
+	<p class='justify lead'>Damit wir dich am optimalsten einteilen können oder bei Unklarheiten anrufen können benötigen wir noch einige Angaben von Dir. Bitte stelle sichr, dass du während dem Höck (siehe oben Kapital "Infos & Daten") telefonisch erreichbar bist.</p>
 
-	<table>
+	<table class='angaben' cellspacing='0'>
 		<tr>
-			<td>Pfadiname</td>
-			<td><input type='text' name='pfadiname' id='pfadiname' /></td>
-			<td>&nbsp;</td>
-			<td>Ich habe Erfahrung in der</td>
+			<td class='label'>Pfadiname</td>
+			<td><input type='text' name='pfadiname' id='pfadiname' placeholder="Taze" required /></td>
+			<td class='vspace'>&nbsp;</td>
+			<td class='label'>Ich habe Erfahrung in der</td>
 			<td><input type='checkbox' name='erfahrung_1_stufe' id='erfahrung_1_stufe' value='1' /> 1. Stufe und/oder <input type='checkbox' name='erfahrung_2_stufe' id='erfahrung_2_stufe' value='2'/> 2. Stufe</td>
 		</tr>
 		<tr>
-			<td>E-Mail-Adresse</td>
+			<td class='label'>E-Mail-Adresse</td>
 			<td><input type='text' name='email' id='email' placeholder="taze@aure5.ch" pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})" title="Ung&uuml;ltige E-mail Adresse" required/></td>
-			<td>&nbsp;</td>
-			<td>Aktuell leite ich in der</td>
+			<td class='vspace'>&nbsp;</td>
+			<td class='label'>Aktuell leite ich in der</td>
 			<td><input type='radio' name='aktuell_leiter_in' id='aktuell_leiter_in_1' value='1' required/> 1. Stufe oder <input type='radio' name='aktuell_leiter_in' id='aktuell_leiter_in_2' value='2' required/> 2. Stufe</td>
 		</tr>
 		<tr>
-			<td>Natelnummer</td>
+			<td class='label'>Natelnummer</td>
 			<td><input type='text' name='natelnummer' id='natelnummer' placeholder="079 123 45 67" pattern="([0-9]{10})|(\s*[0-9]{3}\s*[0-9]{3}\s*[0-9]{2}\s*[0-9]{2}\s*)" title="Ung&uuml;ltige Natelnummer" required/></td>
-			<td>&nbsp;</td>
-			<td>Panoramekurs besucht ?</td>
+			<td class='vspace'>&nbsp;</td>
+			<td class='label'>Panoramekurs besucht ?</td>
 			<td><input type='radio' name='panorama' id='panorama_ja' value='1' required/> Ja  <input type='radio' name='panorama' id='panorama_nein' value='0' required/>Nein</td>
 		</tr>
 		<tr>
-			<td>Abteilung</td>
+			<td class='label'>Abteilung</td>
 			<td>
 				<select name='abteilung' id='abteilung'>
 					<option value="0">- - - Bitte wählen - - -</option>
@@ -130,12 +148,16 @@
 				  </optgroup>
 				</select>
 			</td>
-			<td>&nbsp;</td>
-			<td colspan='2'><textarea name='bemerkung' id='bemerkung' placeholder="Bemerkung..."></textarea></td>
+			<td class='vspace'>&nbsp;</td>
+			<td colspan='2' rowspan='2' class='textfield'><textarea name='bemerkung' id='bemerkung' placeholder="Bemerkung..."></textarea></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
 		</tr>
 	</table>
 
-	<input type='submit' value='Absenden' id='submit' />
+	<div id='center'><input type='submit' value='Absenden' id='submit' /></div>
 
 	</form>
 
