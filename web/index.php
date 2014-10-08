@@ -44,14 +44,17 @@ $app->get('/', function () use($app) {
     $data['ablat'] = $app['db']->fetchAll("SELECT * FROM kurse WHERE `type` = 'ablat' ORDER BY `id` ASC");
 
     return $app['mustache']->render('register', $data);	
-});
+})->bind("start");
 
 $app->get('/thanks', function () use($app) {
     $data['year'] = date('Y')+1;
     return $app['mustache']->render('thanks', $data);	
-})->bind("thanks");;
+})->bind("thanks");
 
 $app->post('/save', function(Request $request) use($app) {
+
+    if($request->get('sent') != "1")
+        return $app->redirect($app["url_generator"]->generate("start"));
 
     $leiter = array();
     $leiter['pfadiname'] = ucfirst($request->get('pfadiname'));

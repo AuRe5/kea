@@ -42,9 +42,10 @@ function validateForm() {
 		alert(errors.shift());
 		return false;
 	}
-	else
+	else {
+		$("#sent").val("1");
 		return true;
-	
+	}
 }
 
 $(document).ready(function() {
