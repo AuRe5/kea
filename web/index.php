@@ -68,7 +68,7 @@ $app->post('/save', function(Request $request) use($app) {
     $leiter['bemerkung'] = $request->get('bemerkung');
 
     $app['db']->insert('leiter', $leiter);
-    $user_id = $app['db']->fetchColumn("SELECT id FROM `kea`.`leiter` WHERE `pfadiname` = '".$leiter['pfadiname']."' AND `email` = '".$leiter['email']."' AND `natelnummer` = '".$leiter['natelnummer']."'");
+    $user_id = $app['db']->fetchColumn("SELECT id FROM `leiter` WHERE `pfadiname` = '".$leiter['pfadiname']."' AND `email` = '".$leiter['email']."' AND `natelnummer` = '".$leiter['natelnummer']."'");
     $param_iterator = $request->request->getIterator();
     $kurse = array();
     while($param_iterator->valid()) {
