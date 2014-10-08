@@ -25,4 +25,6 @@ $> mysql -u <USERNAME> -p -h localhost <DB_NAME> < ./ressource/db_structure.sql
 6. Import Base-Date
 $> mysql -u <USERNAME> -p -h localhost <DB_NAME> < ./ressource/db_data.sql
 
-7. Done.
+7. Create ./tmp/log-Directory and give webserver right wor write.
+
+8. Done.
