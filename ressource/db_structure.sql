@@ -1,4 +1,4 @@
-CREATE TABLE `kea`.`leiter` (
+CREATE TABLE `leiter` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `pfadiname` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
@@ -12,14 +12,14 @@ CREATE TABLE `kea`.`leiter` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
-  CREATE TABLE `kea`.`abteilungen` (
+  CREATE TABLE `abteilungen` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `parent` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
-CREATE TABLE `kea`.`kurse` (
+CREATE TABLE `kurse` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `daten` VARCHAR(150) NULL,
@@ -27,7 +27,7 @@ CREATE TABLE `kea`.`kurse` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
-CREATE TABLE `kea`.`anmeldung` (
+CREATE TABLE `anmeldung` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `kurs_id` INT NOT NULL,
