@@ -34,7 +34,7 @@ function validateForm() {
 	if(!$("#aktuell_leiter_in_1").is(':checked') && !$("#aktuell_leiter_in_2").is(':checked'))
 		errors.push("Was ist deine aktuelle Leitertätigkeit?");
 
-	if(!$("#panorama_ja").is(':checked') && !("#panorama_nein").is(':checked'))
+	if(!$("#panorama_ja").is(':checked') && !$("#panorama_nein").is(':checked'))
 		errors.push("Hast du den Panorama-Kurs besucht ?");
 
 	if(errors.length > 0) {
