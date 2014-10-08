@@ -67,14 +67,29 @@ $app->post('/save', function(Request $request) use($app) {
     $app['db']->insert('leiter', $leiter);
     $user_id = $app['db']->fetchColumn("SELECT id FROM `kea`.`leiter` WHERE `pfadiname` = '".$leiter['pfadiname']."' AND `email` = '".$leiter['email']."' AND `natelnummer` = '".$leiter['natelnummer']."'");
     $param_iterator = $request->request->getIterator();
+    $kurse = array();
     while($param_iterator->valid()) {
         if(preg_match('/^intresse_kurs_/',$param_iterator->key()) && $param_iterator->current() != "nichts") {
             $kurs_key_array = explode("_", $param_iterator->key());
             $prio = ($request->get('prioritaet_kurs_'.$kurs_key_array[2]) == "") ? null : $request->get('prioritaet_kurs_'.$kurs_key_array[2]);
             $app['db']->insert('anmeldung', array("user_id" => $user_id, "kurs_id" => $kurs_key_array[2], "type" => $param_iterator->current(), "prio" => $prio));
+            $kurse[] = array("user_id" => $user_id, "kurs_id" => $kurs_key_array[2], "type" => $param_iterator->current(), "prio" => $prio);
             //$ret .= $param_iterator->key() . "=" . $param_iterator->current() . " => ".$request->get('prioritaet_kurs_'.$kurs_key_array[2])."<br/>";
         }
         $param_iterator->next();
+    }
+
+    //createDataArray
+    $anmeldung = array("leiter" => $leiter, "kurse" => $kurse);
+
+    //save to log
+    $filename = date("Y-m-d_H-i-s",time())."_".substr(md5(time()), 0,6).".log";
+    if(!file_put_contents(getcwd()."/../tmp/log/".$filename, json_encode($anmeldung, JSON_PRETTY_PRINT))) {
+        $to = "vouillamoz@gmail.com";
+        $subject = "KEA - Fail Anmeldung";
+        $message = "Could not write ".getcwd()."/../tmp/log/".$filename."\r\n\r\n".json_encode($anmeldung, JSON_PRETTY_PRINT);
+        $headers = 'From: kea@aure5.ch';
+        mail($to, $subject, $message, $headers);
     }
 
     return $app->redirect($app["url_generator"]->generate("thanks"));
