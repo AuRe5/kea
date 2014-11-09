@@ -36,6 +36,9 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 $app->get('/', function () use($app) {
 
+    if(time() >= mktime(17,0,0,10,27,2014))
+        return $app->redirect($app["url_generator"]->generate("closed"));
+
     $data['year'] = date('Y')+1;
     //Fetching data from db for Frontend 
     $data['abt_hochwacht'] = $app['db']->fetchAll("SELECT * FROM abteilungen WHERE `parent` = 'Region Hochwacht' ORDER BY `name` ASC");
@@ -50,6 +53,12 @@ $app->get('/thanks', function () use($app) {
     $data['year'] = date('Y')+1;
     return $app['mustache']->render('thanks', $data);	
 })->bind("thanks");
+
+$app->get('/closed', function () use($app) {
+    $data['year'] = date('Y')+1;
+    return $app['mustache']->render('closed', $data);   
+})->bind("closed");
+
 
 $app->post('/save', function(Request $request) use($app) {
 
